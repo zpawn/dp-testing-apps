@@ -7,14 +7,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: [resolve(__dirname, "src/index.ts")],
-      name: "app-builder",
-      fileName: (format, name) => {
-        if (format === "es") {
-          return `${name}.js`;
-        }
-
-        return `${name}.${format}`;
-      },
+      name: "testing-utils",
     },
     sourcemap: true,
   },
