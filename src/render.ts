@@ -1,15 +1,15 @@
 import { createElement } from "react";
-import {
-  RenderResult,
-  render as testingLibraryRender,
-  RenderOptions as TestingLibraryRenderOptions,
-} from "@testing-library/react";
+import { render as testingLibraryRender } from "@testing-library/react";
 import { HashRouter } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { lightTheme, ThemeProvider } from "@deskpro/deskpro-ui";
 import { DeskproAppProvider } from "@deskpro/app-sdk";
 import type { FC, ReactElement, PropsWithChildren } from "react";
 import type { ThemeProviderProps } from "@deskpro/deskpro-ui";
+import type {
+  RenderResult,
+  RenderOptions as TestingLibraryRenderOptions,
+} from "@testing-library/react";
 
 interface WrapperOptions {
   appSdk?: boolean;
