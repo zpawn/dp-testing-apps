@@ -12,7 +12,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "vite build",
+    "build": "tsc",
     "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
