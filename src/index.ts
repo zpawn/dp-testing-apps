@@ -1,2 +1,2 @@
-export { render, wrap } from "./render";
+export * from "./utils";
 export * from "./mocks";

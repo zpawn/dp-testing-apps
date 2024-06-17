@@ -1,6 +1,17 @@
-const mockClient = {
-  getProxyAuth: () => Promise.resolve({}),
-  getAdminGenericProxyAuth: () => Promise.resolve({}),
+import type { IDeskproClient } from "@deskpro/app-sdk";
+
+const mockClient: IDeskproClient = {
+  run: () => Promise.resolve(),
+
+  onReady: () => {},
+  onShow: () => {},
+  onChange: () => {},
+  onTargetAction: () => {},
+  onAdminSettingsChange: () => {},
+  onElementEvent: () => {},
+
+  getProxyAuth: () => new Promise(() => {}),
+  getAdminGenericProxyAuth: () => new Promise(() => {}),
   resize: () => {},
   setWidth: () => {},
   setHeight: () => {},
@@ -36,15 +47,35 @@ const mockClient = {
   getStaticOAuth2CallbackUrl: async () => ({ url: "" }),
   getStaticOAuth2CallbackUrlValue: async () => "",
   getStaticOAuth2Token: async () => null,
+  getEntityAssociation: () => ({
+    set: () => Promise.resolve(),
+    delete: () => Promise.resolve(),
+    get: () => Promise.resolve(null),
+    list: () => Promise.resolve(["001"]),
+  }),
 
   setAdminSetting: async () => {},
   setAdminSettingInvalid: async () => {},
+  sendDeskproUIMessage: () => Promise.resolve(),
 
   oauth2: () => ({
+    getCallbackUrl: () => Promise.resolve({
+      callbackUrl: "deskpro.test/oauth2/1/generic/callback",
+      poll: () => Promise.resolve({ statePath: "statePath", statePathPlaceholder: "statePathPlaceholder" }),
+    }),
     getGenericCallbackUrl: () => Promise.resolve({
       callbackUrl: "deskpro.test/oauth2/1/generic/callback",
       poll: () => Promise.resolve({ token: "auth_code" }),
     }),
+    getAdminGenericCallbackUrl: () => Promise.resolve({
+      callbackUrl: "deskpro.test/oauth2/1/generic/callback",
+      poll: () => Promise.resolve({ token: "thisIsToken" }),
+    }),
+  }),
+  deskpro: () => ({
+    send: () => Promise.resolve(),
+    appendContentToActiveTicketReplyBox: () => Promise.resolve(),
+    appendLinkToActiveTicketReplyBox: () => Promise.resolve(),
   }),
 };
 
