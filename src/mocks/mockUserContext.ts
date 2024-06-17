@@ -1,4 +1,4 @@
-{
+export default {
   "type": "user",
   "settings": {
     "api_key": "thisIsApiKey"

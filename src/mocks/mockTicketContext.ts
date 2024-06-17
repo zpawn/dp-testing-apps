@@ -1,4 +1,4 @@
-{
+export default {
     "type": "ticket",
     "settings": {},
     "data": {
@@ -58,4 +58,3 @@
       }
     }
   }
-  

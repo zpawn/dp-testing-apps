@@ -6,3 +6,9 @@ build
 dist-ssr
 *.local
 /coverage
+/dist
+/esm
+/cjs
+/.idea
+/node_modules
+build-storybook
