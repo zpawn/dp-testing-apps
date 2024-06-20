@@ -1,6 +1,6 @@
 {
   "name": "@zpawn/dp-testing-apps",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": false,
   "description": "",
   "main": "cjs/index.js",
@@ -9,7 +9,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "files": ["dist", "esm", "cjs"],
+  "files": [
+    "dist",
+    "esm",
+    "cjs"
+  ],
   "scripts": {
     "build": "pnpm build:clean && pnpm build:esm && pnpm build:cjs && pnpm build:dist",
     "build:clean": "rimraf ./dist && rimraf ./esm && rimraf ./cjs",
