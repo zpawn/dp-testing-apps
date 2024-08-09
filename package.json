@@ -1,6 +1,6 @@
 {
   "name": "@zpawn/dp-testing-apps",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "private": false,
   "description": "",
   "main": "cjs/index.js",
@@ -12,16 +12,14 @@
   "files": [
     "dist",
     "esm",
-    "cjs",
-    "jest.setup.tsx"
+    "cjs"
   ],
   "scripts": {
-    "build": "pnpm build:clean && pnpm build:esm && pnpm build:cjs && pnpm build:dist && pnpm copy",
+    "build": "pnpm build:clean && pnpm build:esm && pnpm build:cjs && pnpm build:dist",
     "build:clean": "rimraf ./dist && rimraf ./esm && rimraf ./cjs",
     "build:dist": "tsc",
     "build:esm": "tsc --outDir ./esm",
-    "build:cjs": "babel ./src --out-dir ./cjs --extensions .ts,.tsx --plugins @babel/plugin-transform-modules-commonjs",
-    "copy": "cpx ./src/jest.setup.tsx ./"
+    "build:cjs": "babel ./src --out-dir ./cjs --extensions .ts,.tsx --plugins @babel/plugin-transform-modules-commonjs"
   },
   "peerDependencies": {
     "@deskpro/app-sdk": "^3.0.20",
@@ -47,7 +45,6 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript/lib-dom": "npm:@types/web@^0.0.148",
-    "cpx": "^1.5.0",
     "react-resize-observer": "^1.1.1",
     "resize-observer-polyfill": "^1.5.1",
     "rimraf": "^5.0.7",
