@@ -38,7 +38,14 @@ jobs:
         run: |
           git config --global user.name "git log -1 --pretty=format:%an"
           git config --global user.email "$(git log -1 --pretty=format:%ae)"
-          npm version patch
+
+          if [[ "${{ steps.labels.outputs.result }}" == "major-version" ]]; then
+            npm version major
+          elif [[ "${{ steps.labels.outputs.result }}" == "minor-version" ]]; then
+            npm version minor
+          else
+            npm version patch
+          fi
 
       - name: Authenticate NPM
         run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
