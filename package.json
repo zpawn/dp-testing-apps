@@ -1,6 +1,6 @@
 {
   "name": "@zpawn/dp-testing-apps",
-  "version": "0.1.8",
+  "version": "1.0.0",
   "private": false,
   "description": "",
   "main": "cjs/index.js",
@@ -12,7 +12,8 @@
   "files": [
     "dist",
     "esm",
-    "cjs"
+    "cjs",
+    "jest.setup.ts"
   ],
   "scripts": {
     "build": "pnpm build:clean && pnpm build:esm && pnpm build:cjs && pnpm build:dist",
