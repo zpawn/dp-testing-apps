@@ -63,7 +63,7 @@ const wrap = <P>(node: ReactElement<P>, options?: WrapperOptions): ReactElement<
     children = createElement(deskproAppProvider.component, { children }) as ReactElement;
   }
 
-  if (options?.theme) {
+  if (options?.theme ?? true) {
     children = createElement(themeProvider.component, themeProvider.props, children) as ReactElement;
   }
 

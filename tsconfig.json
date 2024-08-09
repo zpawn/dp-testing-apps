@@ -12,6 +12,7 @@
     "skipLibCheck": true,
     "importHelpers": true,
     "noEmitHelpers": false,
+    "types": ["jest"],
   },
   "include": ["src"],
   "exclude": [
