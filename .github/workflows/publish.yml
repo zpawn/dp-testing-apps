@@ -39,6 +39,8 @@ jobs:
           git config --global user.name "git log -1 --pretty=format:%an"
           git config --global user.email "$(git log -1 --pretty=format:%ae)"
           npm version patch
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm
         run: npm publish --access public
