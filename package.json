@@ -16,12 +16,12 @@
     "jest.setup.ts"
   ],
   "scripts": {
-    "build": "pnpm build:clean && pnpm build:esm && pnpm build:cjs && pnpm build:dist",
+    "build": "pnpm build:clean && pnpm build:esm && pnpm build:cjs && pnpm build:dist && pnpm copy",
     "build:clean": "rimraf ./dist && rimraf ./esm && rimraf ./cjs",
     "build:dist": "tsc",
     "build:esm": "tsc --outDir ./esm",
     "build:cjs": "babel ./src --out-dir ./cjs --extensions .ts,.tsx --plugins @babel/plugin-transform-modules-commonjs",
-    "build:jest-setup": "tsc ./src/jest.setup.ts --outDir ./dist"
+    "copy": "cpx ./src/jest.setup.tsx ./"
   },
   "peerDependencies": {
     "@deskpro/app-sdk": "^3.0.20",
@@ -47,6 +47,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript/lib-dom": "npm:@types/web@^0.0.148",
+    "cpx": "^1.5.0",
     "react-resize-observer": "^1.1.1",
     "resize-observer-polyfill": "^1.5.1",
     "rimraf": "^5.0.7",
