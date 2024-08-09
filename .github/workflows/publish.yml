@@ -34,8 +34,11 @@ jobs:
       - name: Build package
         run: pnpm run build
 
-      - name: Bump patch version
-        run: npm version patch
+      - name: Bump Version
+        run: |
+          git config --global user.name "git log -1 --pretty=format:%an"
+          git config --global user.email "$(git log -1 --pretty=format:%ae)"
+          npm version patch
 
       - name: Publish to npm
         run: npm publish --access public
