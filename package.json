@@ -13,7 +13,7 @@
     "dist",
     "esm",
     "cjs",
-    "jest.setup.ts"
+    "jest.setup.tsx"
   ],
   "scripts": {
     "build": "pnpm build:clean && pnpm build:esm && pnpm build:cjs && pnpm build:dist && pnpm copy",
