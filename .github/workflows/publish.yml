@@ -28,9 +28,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --strict-peer-dependencies
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Install rimraf
         run: pnpm i -g rimraf
 
