@@ -39,15 +39,9 @@ jobs:
           git config --global user.name "git log -1 --pretty=format:%an"
           git config --global user.email "$(git log -1 --pretty=format:%ae)"
 
-          echo '${{ github.event.pull_request.labels }}'
-          labels_array=(${{ github.event.pull_request.labels }})
-          for label in "${labels_array[@]}"; do
-            echo "$label"
-          done
-
-          if [[ "${{ github.event.pull_request.labels }}" == *"major-version"* ]]; then
+          if [[ "${{ github.event.pull_request.labels }}" == "major-version" ]]; then
             npm version major
-          elif [[ "${{ github.event.pull_request.labels }}" == *"minor-version"* ]]; then
+          elif [[ "${{ github.event.pull_request.labels }}" == "minor-version" ]]; then
             npm version minor
           else
             npm version patch
