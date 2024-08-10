@@ -1,6 +1,6 @@
 {
   "name": "@zpawn/dp-testing-apps",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "private": false,
   "description": "",
   "main": "cjs/index.js",
