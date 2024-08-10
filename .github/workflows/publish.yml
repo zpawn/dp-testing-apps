@@ -35,12 +35,14 @@ jobs:
         run: pnpm run build
 
       - name: Bump Version
+        env:
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
         run: |
           git config --global user.name "git log -1 --pretty=format:%an"
           git config --global user.email "$(git log -1 --pretty=format:%ae)"
 
-          labels=$(printf "%s " "${github.event.pull_request.labels[@]}")
-          echo "Labels: $labels"
+
+          echo "Labels: $LABELS"
 
           if [[ "$labels" == *"major-version"* ]]; then
             echo "Bumping major version"
