@@ -42,10 +42,10 @@ jobs:
           labels="${{ github.event.pull_request.labels[*].name }}"
           echo "PR Labels: $labels"
 
-          if echo "$labels" | grep -q '"name":"major-version"'; then
+          if echo "$labels" | grep -q "major-version"; then
             echo "Bumping major version"
             npm version major
-          elif echo "$labels" | grep -q '"name":"minor-version"'; then
+          elif echo "$labels" | grep -q "minor-version"; then
             echo "Bumping minor version"
             npm version minor
           else
