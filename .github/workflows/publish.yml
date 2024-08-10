@@ -41,23 +41,21 @@ jobs:
 
           labels=$(echo "${{ toJSON(github.event.pull_request.labels) }}" | jq -r '.[].name')
 
-          echo "$labels"
-
-          if [[ "${{ github.event.pull_request.labels }}" == *"major-version"* ]]; then
+          if echo "$labels" | grep -q "major-version"; then
             npm version major
-          elif [[ "${{ github.event.pull_request.labels.*.name }}" == *"minor-version"* ]]; then
+          elif echo "$labels" | grep -q "minor-version"; then
             npm version minor
           else
             npm version patch
           fi
 
-      - name: Authenticate NPM
-        run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      # - name: Authenticate NPM
+      #   run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
-      - name: Publish to npm
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      # - name: Publish to npm
+      #   run: npm publish --access public
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
