@@ -49,15 +49,8 @@ jobs:
             npm version patch
           fi
 
-      - name: Commit updated version
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-          git status
-          git add package.json pnpm-lock.yaml
-          git commit -m "Bump package version"
-          git push
+          # push bump package version
+          git push origin HEAD:main
 
       - name: Authenticate NPM
         env:
