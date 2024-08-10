@@ -54,9 +54,10 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+          git status
           git add package.json pnpm-lock.yaml
           git commit -m "Bump package version"
-          git push origin HEAD:main
+          git push
 
       - name: Authenticate NPM
         env:
