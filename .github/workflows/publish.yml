@@ -41,27 +41,29 @@ jobs:
           git config --global user.name "git log -1 --pretty=format:%an"
           git config --global user.email "$(git log -1 --pretty=format:%ae)"
 
-
-          echo "Labels: $LABELS"
-
           if [[ "$LABELS" == *"major-version"* ]]; then
-            echo "Bumping major version"
             npm version major
           elif [[ "$LABELS" == *"minor-version"* ]]; then
-            echo "Bumping minor version"
             npm version minor
           else
-            echo "Bumping patch version"
             npm version patch
           fi
 
-      # - name: Authenticate NPM
-      #   run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      - name: Commit updated version
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      # - name: Publish to npm
-      #   run: npm publish --access public
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          git add package.json package-lock.json
+          git commit -m "Bump package version"
+          git push origin HEAD:main
 
+      - name.: Authenticate NPM
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }
+        run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
+
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+        run: npm publish --access public
