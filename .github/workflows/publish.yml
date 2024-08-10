@@ -40,12 +40,16 @@ jobs:
           git config --global user.email "$(git log -1 --pretty=format:%ae)"
 
           labels="${{ github.event.pull_request.labels[*].name }}"
+          echo "PR Labels: $labels"
 
           if [[ "$labels" == *"major-version"* ]]; then
+            echo "Bumping major version"
             npm version major
           elif [[ "$labels" == *"minor-version"* ]]; then
+            echo "Bumping minor version"
             npm version minor
           else
+            echo "Bumping patch version"
             npm version patch
           fi
 
