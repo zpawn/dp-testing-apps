@@ -44,10 +44,10 @@ jobs:
 
           echo "Labels: $LABELS"
 
-          if [[ "$labels" == *"major-version"* ]]; then
+          if [[ "$LABELS" == *"major-version"* ]]; then
             echo "Bumping major version"
             npm version major
-          elif [[ "$labels" == *"minor-version"* ]]; then
+          elif [[ "$LABELS" == *"minor-version"* ]]; then
             echo "Bumping minor version"
             npm version minor
           else
