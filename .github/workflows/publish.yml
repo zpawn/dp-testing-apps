@@ -39,13 +39,13 @@ jobs:
           git config --global user.name "git log -1 --pretty=format:%an"
           git config --global user.email "$(git log -1 --pretty=format:%ae)"
 
-          labels="${{ github.event.pull_request.labels[*].name }}"
-          echo "PR Labels: $labels"
+          labels=$(printf "%s " "${github.event.pull_request.labels[@]}")
+          echo "Labels: $labels"
 
-          if echo "$labels" | grep -q "major-version"; then
+          if [[ "$labels" == *"major-version"* ]]; then
             echo "Bumping major version"
             npm version major
-          elif echo "$labels" | grep -q "minor-version"; then
+          elif [[ "$labels" == *"minor-version"* ]]; then
             echo "Bumping minor version"
             npm version minor
           else
