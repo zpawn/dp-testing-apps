@@ -41,7 +41,7 @@ jobs:
 
           labels=$(echo "${{ toJSON(github.event.pull_request.labels) }}" | jq -r '.[].name')
 
-          echo "${{ $labels }}"
+          echo "$labels"
 
           if [[ "${{ github.event.pull_request.labels }}" == *"major-version"* ]]; then
             npm version major
