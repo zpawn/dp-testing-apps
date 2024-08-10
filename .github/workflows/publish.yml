@@ -39,9 +39,11 @@ jobs:
           git config --global user.name "git log -1 --pretty=format:%an"
           git config --global user.email "$(git log -1 --pretty=format:%ae)"
 
-          echo "${{ toJSON(steps) }}"
+          labels=$(echo "${{ toJSON(github.event.pull_request.labels) }}" | jq -r '.[].name')
 
-          if [[ "${{ github.event.pull_request.labels.*.name }}" == *"major-version"* ]]; then
+          echo "${{ $labels }}"
+
+          if [[ "${{ github.event.pull_request.labels }}" == *"major-version"* ]]; then
             npm version major
           elif [[ "${{ github.event.pull_request.labels.*.name }}" == *"minor-version"* ]]; then
             npm version minor
