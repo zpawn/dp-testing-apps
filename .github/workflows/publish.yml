@@ -52,8 +52,12 @@ jobs:
 
       - name: Authenticate NPM
         env:
-            NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
+          cat .npmrc
 
-      - name: Publish to npm
-        run: pnpm publish --access public
+      # - name: Publish to npm
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      #   run: npm publish --access public
