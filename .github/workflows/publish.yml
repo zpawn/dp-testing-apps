@@ -51,7 +51,9 @@ jobs:
           git push origin HEAD:main
 
       - name: Authenticate NPM
-        run: echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" >> .npmrc
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
 
       - name: Publish to npm
         run: pnpm publish --access public
