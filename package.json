@@ -19,7 +19,8 @@
     "build:clean": "rimraf ./dist && rimraf ./esm && rimraf ./cjs",
     "build:dist": "tsc",
     "build:esm": "tsc --outDir ./esm",
-    "build:cjs": "babel ./src --out-dir ./cjs --extensions .ts,.tsx --plugins @babel/plugin-transform-modules-commonjs"
+    "build:cjs": "babel ./src --out-dir ./cjs --extensions .ts,.tsx --plugins @babel/plugin-transform-modules-commonjs",
+    "bumpManifestVer": "node ./bin/bumpManifestVer.js"
   },
   "peerDependencies": {
     "@deskpro/app-sdk": "^3.0.20",
