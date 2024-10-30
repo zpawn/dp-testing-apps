@@ -11,6 +11,7 @@ jobs:
     if: github.event.pull_request.merged == true
     permissions:
       contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,30 +33,83 @@ jobs:
       - name: Build package
         run: pnpm run build
 
+      # Клонування гілки master
+      - name: Checkout master branch
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      # Бампання версії
       - name: Bump Version
         env:
           LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
         run: |
-          git config --global user.name "git log -1 --pretty=format:%an"
-          git config --global user.email "$(git log -1 --pretty=format:%ae)"
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+          # Отримання міток з початкового ПР
+          LABELS=$(echo '${{ toJson(github.event.pull_request.labels) }}')
+          echo "Labels: $LABELS"
 
           if [[ "$LABELS" == *"major-version"* ]]; then
-            npm version major
+            pnpm run bumpManifestVer major
           elif [[ "$LABELS" == *"minor-version"* ]]; then
-            npm version minor
+            pnpm run bumpManifestVer minor
           else
-            npm version patch
+            pnpm run bumpManifestVer
           fi
 
-          # push bump package version
-          git push origin HEAD:main
+          # Коміт змін
+          git add .
+          git commit -m "Bump version"
 
-      - name: Authenticate NPM
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
+      # Пуш змін у нову гілку
+      - name: Push changes to new branch
+        run: |
+          BRANCH_NAME="version-bump-${{ github.run_id }}"
+          git push origin HEAD:$BRANCH_NAME
 
-      - name: Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        run: pnpm publish --access public
+      # Створення нового ПР
+      - name: Create Pull Request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const branchName = 'version-bump-${{ github.run_id }}';
+            const { data: pr } = await github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Version bump after merging PR #${{ github.event.pull_request.number }}',
+              head: branchName,
+              base: 'master',
+              body: 'Цей ПР створено автоматично для бампання версії після злиття ПР #${{ github.event.pull_request.number }}.',
+            });
+            core.setOutput('pr_number', pr.number);
+
+      # - name: Bump Version
+      #   env:
+      #     LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+      #   run: |
+      #     git config --global user.name "git log -1 --pretty=format:%an"
+      #     git config --global user.email "$(git log -1 --pretty=format:%ae)"
+
+      #     if [[ "$LABELS" == *"major-version"* ]]; then
+      #       npm version major
+      #     elif [[ "$LABELS" == *"minor-version"* ]]; then
+      #       npm version minor
+      #     else
+      #       npm version patch
+      #     fi
+
+      #     # push bump package version
+      #     git push origin HEAD:main
+
+      # - name: Authenticate NPM
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      #   run: echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" >> .npmrc
+
+      # - name: Publish to npm
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      #   run: pnpm publish --access public
