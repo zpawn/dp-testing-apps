@@ -76,7 +76,7 @@ jobs:
         with:
           script: |
             const branchName = 'version-bump-${{ github.run_id }}';
-            const { data: pr } = await github.pulls.create({
+            const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: 'Version bump after merging PR #${{ github.event.pull_request.number }}',
