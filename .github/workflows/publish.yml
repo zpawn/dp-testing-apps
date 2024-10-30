@@ -33,11 +33,11 @@ jobs:
       # - name: Build package
       #   run: pnpm run build
 
-      # Клонування гілки master
-      - name: Checkout master branch
+      # Клонування гілки main
+      - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          ref: master
+          ref: main
           fetch-depth: 0
 
       # Бампання версії
@@ -76,12 +76,13 @@ jobs:
         with:
           script: |
             const branchName = 'version-bump-${{ github.run_id }}';
-            const { data: pr } = await github.pulls.create({
+            const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: 'Version bump after merging PR #${{ github.event.pull_request.number }}',
               head: branchName,
               base: 'main',
+
               body: 'Цей ПР створено автоматично для бампання версії після злиття ПР #${{ github.event.pull_request.number }}.',
             });
             core.setOutput('pr_number', pr.number);
