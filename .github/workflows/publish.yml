@@ -27,11 +27,11 @@ jobs:
         with:
           version: 9
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile --strict-peer-dependencies
+      # - name: Install dependencies
+      #   run: pnpm install --frozen-lockfile --strict-peer-dependencies
 
-      - name: Build package
-        run: pnpm run build
+      # - name: Build package
+      #   run: pnpm run build
 
       # Клонування гілки master
       - name: Checkout master branch
@@ -81,7 +81,8 @@ jobs:
               repo: context.repo.repo,
               title: 'Version bump after merging PR #${{ github.event.pull_request.number }}',
               head: branchName,
-              base: 'master',
+              base: 'main',
+
               body: 'Цей ПР створено автоматично для бампання версії після злиття ПР #${{ github.event.pull_request.number }}.',
             });
             core.setOutput('pr_number', pr.number);
